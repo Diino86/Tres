@@ -15,29 +15,29 @@ end = color.ENDC
 
 def main():
     print('sk = skipp\nrv = reverse\ndr2 = draw 2')
-    print('w = wild\nwdr4 = Wild Draw 4\n')
-    player1 = []
-    player2 = []
-    player3 = []
-    player4 = []
+    print('w = wild\nwd4 = wild draw 4\n')
+    decks = {}
+    #card_pile = cards()
+    count(card_pile)
+    startCard(card_pile)
     
-    card_pile = cards()
+    for n in range(playerCount()):
+        decks[n+1] = distribute(card_pile)
+
+    showCards(decks[1])
     count(card_pile)
     
-#     for n in playerCount:
-        
-    player1 = distribute(card_pile)
-    print(player1)
-    showCards((player1))
-
 
 #Card Generator______________________________________________________
     #Automatically generates all needed cards
 def cards():
+    #Available cards:
+    #Card number 0-9
+    #Special card (10 = Skip   11 = Reverse   12 = Draw 2)
+    #Unique card  (13 = Wild   14 = Wild Draw 4)
+    
     cards = []
     colors = ['r', 'b', 'g', 'y']
-    #Special (10 = Skip   11 = Reverse   12 = Draw 2)
-    #Unique  (13 = Wild   14 = Wild Draw 4)
     
     #4 cards - Type 0
     for color in colors:
@@ -53,7 +53,7 @@ def cards():
     #8 cards - type unique
     for _ in range(4):
         for u in range(13,15):
-            cards.append((u, None))
+            cards.append((u, ''))
             
     random.shuffle(cards)
     return cards
@@ -74,23 +74,21 @@ def playerCount():
     return players
 
     #Return a deck of 7 cards from given card list(d_cards)
-def distribute(d_cards):
+def distribute(cards):
     deck = []
     for x in range(7):
-        deck.append(d_cards.pop())
+        deck.append(cards.pop())
     return deck
 
-    #Coming soon
-def player(p_cards):
-    player_cards = p_cards
-    return player_cards
+def startCard(cards):
+    pass
 #Coming soon_________________________________________________________
 
 #Find corresponding card number/type and color for each tuple (a, b)_
 def showCards(cards):
     number = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     special = {10:'sk', 11:'rv', 12:'dr2'}
-    unique = {13:'w', 14:'wdr4'}
+    unique = {13:'w', 14:'wd4'}
     color = {'r':red, 'b':blue, 'g':green, 'y':yellow}
     for card in cards:
         if card[0] in number and card[1] in color:
@@ -110,8 +108,11 @@ def whichCard(list, card_attribute):
 
 #Print card so the player can see it
 def PrintCard(number, color):
-    print(f'{color}{number}{end}')
+    print(f'{color}{number}{end}', end=' ')
 #Find corresponding card number/type and color for each tuple (a, b)_
 
-main()
+def yourPlayer():
+    pass
 
+card_pile = cards()
+main()
