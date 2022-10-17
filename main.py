@@ -57,7 +57,6 @@ def distribute(d_cards):
 
 def player(p_cards):
     player_cards = p_cards
-    print(player_cards)
     return player_cards
 
     
@@ -76,15 +75,6 @@ def whichColor(list, card_color):
     for c in list:
         if c == card_color:
             return list[c]
-    
-#     if card_color == 'r':
-#         return red
-#     elif card_color == 'b':
-#         return blue
-#     elif card_color == 'g':
-#         return green
-#     else:
-#         return yellow
     
 def whichSpecial(list, special_card):
     for s in list:

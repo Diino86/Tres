@@ -3,7 +3,8 @@ def cards():
     colors = ['red', 'blue', 'green', 'yellow']
     special = ['skip', 'reverse', 'draw2']
     unique = ['wild', 'wilddraw4']
-    
+#___________________________________________________
+
     #4 cards - Type 0
     for color in colors:
         for zero in range(1):
@@ -19,6 +20,7 @@ def cards():
     for _ in range(4):
         for s in unique:
             cards.append((s, 'none'))
+#____________________________________________________
             
     print(cards)
     return cards
