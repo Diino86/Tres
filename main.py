@@ -6,19 +6,38 @@ class color:
     YELLOW = '\033[93m'
     RED = '\033[91m'
     ENDC = '\033[0m'
+    
+red = color.RED
+blue = color.BLUE
+green = color.GREEN
+yellow = color.YELLOW
+end = color.ENDC
 
 def main():
+    print('sk = skipp\nrv = reverse\ndr2 = draw 2')
+    print('w = wild\nwdr4 = Wild Draw 4\n')
+    player1 = []
+    player2 = []
+    player3 = []
+    player4 = []
+    
+    card_pile = cards()
     count(card_pile)
-    player1 = player(distribute(card_pile))
+    
+#     for n in playerCount:
+        
+    player1 = distribute(card_pile)
+    print(player1)
     showCards((player1))
 
-#Cards_________________________________________________
+
+#Card Generator______________________________________________________
+    #Automatically generates all needed cards
 def cards():
-    print('sk = skipp\nrv = reverse\ndr2 = draw 2\nw = wild\nwdr4 = Wild Draw 4\n')
     cards = []
     colors = ['r', 'b', 'g', 'y']
-    special = ['sk', 'rv', 'dr2']
-    unique = ['w', 'wdr4']
+    #Special (10 = Skip   11 = Reverse   12 = Draw 2)
+    #Unique  (13 = Wild   14 = Wild Draw 4)
     
     #4 cards - Type 0
     for color in colors:
@@ -33,13 +52,15 @@ def cards():
     
     #8 cards - type unique
     for _ in range(4):
-        for s in unique:
-            cards.append((s, 'none'))
+        for u in range(13,15):
+            cards.append((u, None))
             
     random.shuffle(cards)
     return cards
-#_______________________________________________________
+#Card Generator______________________________________________________
 
+#Coming soon_________________________________________________________
+    #Count amout of cards for given list(cards)
 def count(cards):
     n = 0
     for x in cards:
@@ -47,55 +68,50 @@ def count(cards):
     
     print(f'Cards: {n}')
 
+    #Input for how many players will play the game
+def playerCount():
+    players = int(input('Enter the amount of players (1-4): '))
+    return players
 
+    #Return a deck of 7 cards from given card list(d_cards)
 def distribute(d_cards):
-    player_deck = []
+    deck = []
     for x in range(7):
-        player_deck.append(d_cards.pop())
-    return player_deck
+        deck.append(d_cards.pop())
+    return deck
 
-
+    #Coming soon
 def player(p_cards):
     player_cards = p_cards
     return player_cards
+#Coming soon_________________________________________________________
 
-    
-red = color.RED
-blue = color.BLUE
-green = color.GREEN
-yellow = color.YELLOW
-end = color.ENDC
-
-def whichCard(list, card_number):
-    for n in list:
-        if n == card_number:
-            return n
-        
-def whichColor(list, card_color):
-    for c in list:
-        if c == card_color:
-            return list[c]
-    
-def whichSpecial(list, special_card):
-    for s in list:
-        if s == special_card:
-            return list[s]
-        
-
+#Find corresponding card number/type and color for each tuple (a, b)_
 def showCards(cards):
     number = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     special = {10:'sk', 11:'rv', 12:'dr2'}
+    unique = {13:'w', 14:'wdr4'}
     color = {'r':red, 'b':blue, 'g':green, 'y':yellow}
     for card in cards:
         if card[0] in number and card[1] in color:
-            Card(whichColor(color, card[1]), whichCard(number, card[0]))
+            PrintCard(whichCard(number, card[0]), whichCard(color, card[1]))
         elif card[0] in special and card[1] in color:
-            Card(whichColor(color, card[1]), whichSpecial(special, card[0]))
+            PrintCard(whichCard(special, card[0]), whichCard(color, card[1]))
+        elif card[0] in unique:
+            PrintCard(whichCard(unique, card[0]), '')
         else:
             print('Coming soon')
             
-def Card(color, number):
-    print(f'{color}{number}{end}')
+    #Find card number/color/type for given list(list)
+def whichCard(list, card_attribute):
+    for a in list:
+        if a == card_attribute:
+            return list[a]
 
-card_pile = cards()
+#Print card so the player can see it
+def PrintCard(number, color):
+    print(f'{color}{number}{end}')
+#Find corresponding card number/type and color for each tuple (a, b)_
+
 main()
+
