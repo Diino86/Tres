@@ -19,12 +19,14 @@ def main():
     decks = {}
     #card_pile = cards()
     count(card_pile)
-    startCard(card_pile)
     
     for n in range(playerCount()):
         decks[n+1] = distribute(card_pile)
 
+    showCards(startingCard(card_pile))
+    print()
     showCards(decks[1])
+    print()
     count(card_pile)
     
 
@@ -80,8 +82,17 @@ def distribute(cards):
         deck.append(cards.pop())
     return deck
 
-def startCard(cards):
-    pass
+def startingCard(cards):
+    one = []
+    while True:
+        one.append(cards.pop())
+        if one[0] == 14:
+            cards.append(one.pop())
+            random.shuffle(cards)
+        else:
+            return one
+            break
+        
 #Coming soon_________________________________________________________
 
 #Find corresponding card number/type and color for each tuple (a, b)_
@@ -108,7 +119,7 @@ def whichCard(list, card_attribute):
 
 #Print card so the player can see it
 def PrintCard(number, color):
-    print(f'{color}{number}{end}', end=' ')
+    print(f'{color}|{number}|{end}', end=' ')
 #Find corresponding card number/type and color for each tuple (a, b)_
 
 def yourPlayer():
