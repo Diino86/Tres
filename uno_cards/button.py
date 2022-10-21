@@ -1,6 +1,10 @@
 import pygame
 
-class Button():
+class img:
+    def __init__(self, image):
+        self.image = pygame.image.load('button_img/' + image).convert_alpha()
+
+class Button:
     def __init__(self, x, y, image, scale):
         width = image.get_width()
         height = image.get_height()
