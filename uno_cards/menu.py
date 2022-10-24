@@ -1,27 +1,19 @@
 import pygame
+import time
 # importing from local .py files
 from button import *
+from display import *
+from menu2 import *
 
-
-class menu_display:
-    def __init__(self):
-        # Window size and title
-        self.WIDTH, self.HEIGHT = 1280, 720
-        self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
-        pygame.display.set_caption('Tres: Fun with the family')
-        self.clock = pygame.time.Clock()
-        self.RUNNING = True
-        self.ORANGE = (232, 115, 26)
-        self.FPS = 60
 
 class menu1(menu_display):
     def __init__(self):
         menu_display.__init__(self)
         
         # Button images
-        self.tres_logo_img = img('tres_logo.png')
-        self.start_img = img('start_button.png')
-        self.quit_img = img('quit_button.png')
+        self.tres_logo_img = img('tres_logo')
+        self.start_img = img('start_button')
+        self.quit_img = img('quit_button')
 
         # Button(x, y, image, scale)
         self.tres_logo = Button(350, 40, self.tres_logo_img.image, 0.8)
@@ -36,11 +28,13 @@ class menu1(menu_display):
             
             # Show background and images
             self.screen.fill(self.ORANGE)
-            self.tres_logo.draw(self.screen)
+            self.tres_logo.draw_only(self.screen)
             
             # Button interaction
             if self.start_button.draw(self.screen) == True:
-                print('Start')
+                time.sleep(0.1)
+                m2 = menu2()
+                m2.main()
             if self.quit_button.draw(self.screen) == True:
                 self.RUNNING = False
             

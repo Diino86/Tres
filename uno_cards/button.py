@@ -2,7 +2,13 @@ import pygame
 
 class img:
     def __init__(self, image):
-        self.image = pygame.image.load('button_img/' + image).convert_alpha()
+        self.image = pygame.image.load('button_img/' + image + '.png').convert_alpha()
+
+class card:
+    def __init__(self, number, color):
+        self.number = number
+        self.color = color
+        self.image = pygame.image.load('uno_card_img/uno_card-' + str(self.color) + str(self.number) + '.png').convert_alpha()
 
 class Button:
     def __init__(self, x, y, image, scale):
@@ -12,7 +18,10 @@ class Button:
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
         self.clicked = False
-
+        
+    def draw_only(self, surface):
+        surface.blit(self.image, (self.rect.x, self.rect.y))
+        
     def draw(self, surface):
         action = False
         
