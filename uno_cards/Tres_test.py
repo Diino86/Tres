@@ -1,5 +1,6 @@
 import random
 import pygame
+from button import *
 
 class color:
     BLUE = '\033[96m'
@@ -19,19 +20,14 @@ class player:
     def __init__(self, deck):
         self.deck = deck
 
-class card:
-    def __init__(self, number, color, image):
-        self.number = number
-        self.color = color
-        self.image = pygame.image.load('uno_card_img/uno_card-' + str(self.number) + str(self.color) + '.png')
-        
-    
-
 
 class deck:
-    def __init__(self):    
-        colors = ['red', 'blue', 'green', 'yellow']
+    def __init__(self):
         self.cards = []
+        colors = ['red', 'blue', 'green', 'yellow']
+        special = ['draw2', 'reverse', 'skip']
+        unique = ['wildchange', 'wilddraw4']
+        
         
         for color in colors:
             for zero in range(1):
@@ -39,12 +35,17 @@ class deck:
 
         for _ in range(2):
             for color in colors:
-                for number in range(1, 13):
+                for number in range(1, 10):
                     self.cards.append((number, color))
+                    
+        for _ in range(2):
+            for color in colors:
+                for s in special:
+                    self.cards.append((s, color))
         
         for _ in range(4):
-            for unique in range(13,15):
-                self.cards.append((unique, ''))
+            for u in unique:
+                self.cards.append((u, ''))
         
         random.shuffle(self.cards)
         
