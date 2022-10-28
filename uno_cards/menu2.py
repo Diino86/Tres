@@ -3,7 +3,7 @@ import time
 from button import *
 from display import *
 # Change 'test' later
-from test import *
+from game import *
 
 
 class menu2(menu_display):

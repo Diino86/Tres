@@ -2,13 +2,13 @@ import pygame
 
 class img:
     def __init__(self, image):
-        self.image = pygame.image.load('button_img/' + image + '.png').convert_alpha()
+        self.image = pygame.image.load(f'button_img/{image}.png').convert_alpha()
 
-class card:
-    def __init__(self, number, color):
-        self.number = number
-        self.color = color
-        self.image = pygame.image.load('uno_card_img/uno_card-' + str(self.color) + str(self.number) + '.png').convert_alpha()
+# class card:
+#     def __init__(self, number, color):
+#         self.number = number
+#         self.color = color
+#         self.image = pygame.image.load(f'uno_card_img/uno_card-{str(self.color)}{str(self.number)}.png').convert_alpha()
 
 class Button:
     def __init__(self, x, y, image, scale):
@@ -43,5 +43,37 @@ class Button:
         
         # draw button on screen
         surface.blit(self.image, (self.rect.x, self.rect.y))
+        
+        return action
+
+#Version2_________________________________________________________________
+
+class card:
+    def __init__(self, number, color):
+        self.scale = 0.25
+        self.number = number
+        self.color = color
+        self.load_image = pygame.image.load(f'uno_card_img/uno_card-{str(self.color)}{str(self.number)}.png').convert_alpha()
+        
+        width = self.load_image.get_width()
+        height = self.load_image.get_height()
+        self.image = pygame.transform.scale(self.load_image, (int(width * self.scale), int(height * self.scale)))
+        self.rect = self.image.get_rect()
+        self.clicked = False
+        
+    def draw(self, x, y, surface):
+        action = False
+        self.rect.topleft = (x, y)
+        pos = pygame.mouse.get_pos()
+        
+        if self.rect.collidepoint(pos):
+            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
+                self.clicked = True
+                action = True
+                
+        if pygame.mouse.get_pressed()[0] == 0:
+            self.clicked = False
+        
+        surface.blit(self.image, (x, y))
         
         return action
