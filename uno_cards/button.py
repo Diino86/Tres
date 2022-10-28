@@ -1,4 +1,5 @@
 import pygame
+import time
 
 class img:
     def __init__(self, image):
@@ -70,6 +71,7 @@ class card:
             if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
                 self.clicked = True
                 action = True
+                time.sleep(0.2)
                 
         if pygame.mouse.get_pressed()[0] == 0:
             self.clicked = False

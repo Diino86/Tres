@@ -74,7 +74,7 @@ class game_menu(menu_display, card_objects):
         card_objects.__init__(self)
         self.p1 = player('User1', 550)
         self.p2 = player('User2', 50)
-        self.card_space = 50
+        self.card_space = 70
         self.menu3_RUNNING = True
         self.exit_game_img = img('exit-game_button')
         self.exit_game_button = Button(980, 20, self.exit_game_img.image, 0.35)
@@ -105,7 +105,13 @@ class game_menu(menu_display, card_objects):
         self.screen.fill(self.ORANGE)
         
         if self.pile_img.draw(725, 280, self.screen) == True:
-                pass
+                if self.turn == 1:
+                    self.turn = 2
+                    self.p1.draw(self.deck)
+                elif self.turn == 2:
+                    self.turn = 1
+                    self.p2.draw(self.deck)
+                
         if self.exit_game_button.draw(self.screen) == True:
                 time.sleep(0.1)
                 self.menu3_RUNNING = False

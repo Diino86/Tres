@@ -50,16 +50,16 @@ class player:
         self.player_deck.append(deck.remove())
         
     # add your {input} to .pop(input)
-    def play(self):
-        return self.player_deck.pop()
+    def play(self, index):
+        return self.player_deck.pop(index)
 
 
 class pile(card_objects):
     def __init__(self):
         self.card = []
         
-    def add(self, cards):
-        self.card.insert(0, cards.play())
+    def add(self, cards, index):
+        self.card.insert(0, cards.play(index))
         
     def beginning_add(self, cards):
         self.card.insert(0, cards.remove())
@@ -68,16 +68,17 @@ class pile(card_objects):
         return self.card.pop()
 
 
-class game_menu_(menu_display, card_objects):
+class game_menu(menu_display, card_objects):
     def __init__(self):
         menu_display.__init__(self)
         card_objects.__init__(self)
         self.p1 = player('User1', 550)
         self.p2 = player('User2', 50)
-        self.card_space = 50
+        self.card_space = 70
         self.menu3_RUNNING = True
         self.exit_game_img = img('exit-game_button')
         self.exit_game_button = Button(980, 20, self.exit_game_img.image, 0.35)
+        self.turn = 1
         
         self.pile = pile()
         self.deck = deck()
@@ -104,7 +105,13 @@ class game_menu_(menu_display, card_objects):
         self.screen.fill(self.ORANGE)
         
         if self.pile_img.draw(725, 280, self.screen) == True:
-                pass
+                if self.turn == 1:
+                    self.turn = 2
+                    self.p1.draw(self.deck)
+                elif self.turn == 2:
+                    self.turn = 1
+                    self.p2.draw(self.deck)
+                
         if self.exit_game_button.draw(self.screen) == True:
                 time.sleep(0.1)
                 self.menu3_RUNNING = False
@@ -118,7 +125,12 @@ class game_menu_(menu_display, card_objects):
         x = (self.WIDTH/2 - ((102.5 + ((self.count(player.player_deck) - 1) * self.card_space))/2)) - self.card_space
         for card in player.player_deck:
             x += self.card_space
-            card.draw(x, player.y, self.screen)
+            if card.draw(x, player.y, self.screen) == True:
+                if self.turn == 1:
+                    self.turn = 2
+                elif self.turn == 2:
+                    self.turn = 1
+                self.pile.add(player, player.player_deck.index(card))
             
     def count(self, cards):
         n = 0
@@ -130,13 +142,15 @@ class game_menu_(menu_display, card_objects):
         while self.menu3_RUNNING:
             self.screen_feature()
             self.pile.card[0].draw(455, 280, self.screen)
-            self.card_display(self.p1)
-            self.card_display(self.p2)    
-            
+            if self.turn == 1:
+                self.card_display(self.p1)
+            elif self.turn == 2:
+                self.card_display(self.p2)
+
+                
             pygame.display.update()
 # Temporal____________
 #         pygame.quit()
 # 
-# g = game_menu_()
+# g = game_menu()
 # g.main()
-
